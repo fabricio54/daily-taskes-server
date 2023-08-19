@@ -4,6 +4,9 @@ const app = express();
 // conectando ao database
 import connectDataBase from './src/database/database.js';
 
+// importando rotas
+import userRouter from "./src/routes/user.router.js";
+
 // importando o modolo dotenv para variáveis globais
 import dotenv from "dotenv";
 // configurando o dotenv config
@@ -18,6 +21,8 @@ connectDataBase();
 // configurando o que o app vai usar
 app.use(express.json());
 // importando rotas
+app.use("/user", userRouter);
+
 
 // colocando o servidor para executar
 app.listen(port, () => console.log(`Servidor rodando na port ${port}`));
