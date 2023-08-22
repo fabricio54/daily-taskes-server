@@ -1,5 +1,5 @@
 // importando modulo de services de usuários
-import { create, findAll } from "../services/user.services.js";
+import { create, findAll, update } from "../services/user.services.js";
 
 export const userCreate = async (req, res) => {
     try {
@@ -32,7 +32,7 @@ export const userCreate = async (req, res) => {
             }
         })
     } catch (error) {
-        res.send({ message: error.message });
+        res.status(500).send({ message: error.message });
     }
 }
 
@@ -42,7 +42,7 @@ export const userFindAll = async (req, res) => {
         const users = await findAll();
 
         // verificando se o tamanho e maior que 0
-        if (users.length === 0 ) {
+        if (users.length === 0) {
             return res.status(400).send({
                 message: "Ainda não tem usuários cadastrados no sistema"
             })
@@ -50,7 +50,52 @@ export const userFindAll = async (req, res) => {
         // mostrando os usuários na tela
         res.send(users);
     } catch (error) {
+        res.status(500).send({
+            message: error.message
+        })
+    }
+}
+
+export const findById = async (req, res) => {
+    try {
+        const user = req.user;
+
+        res.send(user);
+        
+    } catch (error) {
+        res.status(500).send({
+            message: error.message
+        })
+    }
+}
+
+export const userUpdate = async (req, res) => {
+    try {
+        const { name, username, email, password } = req.body;
+
+        if (!name && !username && !email && !password) {
+            res.status(400).send({
+                message: "Informe ao menos um campo para atualização"
+            })
+        }
+
+        const { id } = req;
+        
+        const user = await update(
+            id,
+            name,
+            username,
+            email,
+            password,
+        );
+
         res.send({
+            message: "Usuário atualizado com sucesso",
+            user
+        });
+        
+    } catch (error) {
+        res.status(500).send({
             message: error.message
         })
     }
