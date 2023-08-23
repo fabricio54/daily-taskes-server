@@ -18,7 +18,7 @@ export const login = async (req, res) => {
         // comparando as senhas do password enviado e do usuário que encontramos no sistema
         const passwordIsValid = bcrypt.compareSync(password, user.password);
 
-        console.log(password);
+        console.log(password, user.password, passwordIsValid);
 
         if (!passwordIsValid || !user) {
             return res.status(404).send({
