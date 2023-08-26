@@ -7,6 +7,7 @@ import connectDataBase from './src/database/database.js';
 // importando rotas
 import userRouter from "./src/routes/user.router.js";
 import authRouter from "./src/routes/auth.route.js";
+import taskesRouter from "./src/routes/taskes.route.js";
 
 // importando o modolo dotenv para variáveis globais
 import dotenv from "dotenv";
@@ -24,6 +25,8 @@ app.use(express.json());
 // importando rotas
 app.use("/user", userRouter);
 app.use("/auth", authRouter);
+app.use("/taskes", taskesRouter);
+
 
 
 // colocando o servidor para executar
